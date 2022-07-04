@@ -1,0 +1,14 @@
+untuk create project react :
+npx create-react-app my-app
+
+untuk Running Project :
+npm start
+
+untuk Install Bootstrap :
+npm install bootstrap
+
+untuk Install Axios :
+npm install axios
+
+untuk Install Sweetalert :
+npm install sweetalert --save

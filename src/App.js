@@ -4,7 +4,11 @@ import MasterLayout from './layouts/admin/MasterLayout';
 import Home from './components/frontend/Home';
 import Register from './components/frontend/auth/Register';
 import Login from './components/frontend/auth/Login';
+import Page403 from './components/errors/Page403';
+import Page404 from './components/errors/Page404';
+
 import axios from 'axios';
+import AdminPrivateRoute from './AdminPrivateRoute';
 
 axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.headers.post['Accept'] = 'application/json';
@@ -23,6 +27,8 @@ function App() {
         <Switch>
           
           <Route exact path="/" component={Home} />
+          <Route exact path="/403" component={Page403} />
+          <Route exact path="/404" component={Page404} />
 
           {/* <Route path="/register" component={Register} />
           <Route path="/login" component={Login} /> */}
@@ -33,7 +39,8 @@ function App() {
             {localStorage.getItem('auth_token') ? <Redirect to='/'/> : <Login/> }
           </Route>
 
-          <Route path="/admin" name="Admin" render={(props) => <MasterLayout {...props} /> } />
+          {/* <Route path="/admin" name="Admin" render={(props) => <MasterLayout {...props} /> } /> */}
+          <AdminPrivateRoute />
         </Switch>
       </Router>
     </div>

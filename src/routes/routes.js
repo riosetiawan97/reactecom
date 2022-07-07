@@ -6,7 +6,8 @@ import Category from '../components/admin/Category';
 const routes = [
         { path: '/admin', exact: true, name:'Admin' },
         { path: '/admin/dashboard', exact: true, name:'Dashboard', component: Dashboard },
-        { path: '/admin/add-category', exact: true, name:'Category', component: Category },
+        { path: '/admin/add-category', exact: true, name:'Category', component: Category },        
+        { path: '/admin/view-category', exact: true, name:'ViewCategory', component: ViewCategory },
         { path: '/admin/profile', exact: true, name:'Profile', component: Profile },
 ];
 

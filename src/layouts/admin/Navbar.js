@@ -21,10 +21,10 @@ const Navbar = () => {
                         <i className="fas fa-user fa-fw"></i>
                     </Link>
                     <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><Link className="dropdown-item" href="#!">Settings</Link></li>
-                        <li><Link className="dropdown-item" href="#!">Activity Log</Link></li>
+                        <li><Link className="dropdown-item" to="#!">Settings</Link></li>
+                        <li><Link className="dropdown-item" to="#!">Activity Log</Link></li>
                         <li><hr className="dropdown-divider" /></li>
-                        <li><Link className="dropdown-item" href="#!">Logout</Link></li>
+                        <li><Link className="dropdown-item" to="#!">Logout</Link></li>
                     </ul>
                 </li>
             </ul>

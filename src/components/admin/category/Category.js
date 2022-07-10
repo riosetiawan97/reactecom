@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import {Link, useHistory} from 'react-router-dom';
 import axios from 'axios';
 import swal from 'sweetalert';
 
 function Category() {
 
+    const history = useHistory();
     const [categoryInput, setCategory] = useState({
         slug: '',
         name: '',
@@ -38,6 +40,7 @@ function Category() {
             {
                 swal("Success",res.data.message,"success");
                 document.getElementById('category_form').reset();
+                history.push('/admin/view-category');
             }
             else if(res.data.status === 400)
             {
@@ -45,7 +48,6 @@ function Category() {
                 swal("Warning",res.data.errors,"warning");
             }
         });
-
     }
 
     var display_errors = [];
@@ -60,7 +62,9 @@ function Category() {
 
     return (
         <div className='container-fluid px-4'>
-            <h1 className='mt-4'>Add Category</h1>
+            <h1 className='mt-4'>Add Category
+                <Link to="/admin/view-category" className="btn btn-primary btn-sm float-end">View Category</Link>
+            </h1>
 
             {
                 display_errors.map((item)=>{
@@ -114,7 +118,7 @@ function Category() {
                         </div>
                     </div>
                 </div>
-                <button type="submit" className='btn btn-primary px-4 float-end' name="confirm_password">Submit</button>
+                <button type="submit" className='btn btn-primary px-4 float-end'>Submit</button>
             </form>
         </div>
     )

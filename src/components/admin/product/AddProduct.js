@@ -25,6 +25,7 @@ function Product() {
         featured: '',
         popular: '',
         status: '',
+        error_list:[],
     });
     const [picture, setPicture] = useState([]);
     const [errorlist, setError] = useState([]);
@@ -54,20 +55,20 @@ function Product() {
         const formData = new FormData();
         formData.append('image', picture.image);
         formData.append('category_id', productInput.category_id);
-        formData.append('slug,', productInput.slug);
-        formData.append('name,', productInput.name);
-        formData.append('description,', productInput.description);
-        formData.append('meta_title,', productInput.meta_title);
-        formData.append('meta_keyword,', productInput.meta_keywords);
-        formData.append('meta_descrip,', productInput.meta_descrip);
-        formData.append('selling_price,', productInput.selling_price);
-        formData.append('original_price,', productInput.original_price);
-        formData.append('qty,', productInput.qty);
-        formData.append('brand,', productInput.brand);
-        formData.append('image,', productInput.image);
-        formData.append('featured,', productInput.featured);
-        formData.append('popular,', productInput.popular);
-        formData.append('status,', productInput.status);
+        formData.append('slug', productInput.slug);
+        formData.append('name', productInput.name);
+        formData.append('description', productInput.description);
+        formData.append('meta_title', productInput.meta_title);
+        formData.append('meta_keyword', productInput.meta_keywords);
+        formData.append('meta_descrip', productInput.meta_descrip);
+        formData.append('selling_price', productInput.selling_price);
+        formData.append('original_price', productInput.original_price);
+        formData.append('qty', productInput.qty);
+        formData.append('brand', productInput.brand);
+        formData.append('image', productInput.image);
+        formData.append('featured', productInput.featured);
+        formData.append('popular', productInput.popular);
+        formData.append('status', productInput.status);
 
         axios.post(`/api/store-product`, formData).then(res => {
             if(res.data.status === 200)

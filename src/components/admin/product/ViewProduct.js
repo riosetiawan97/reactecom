@@ -4,61 +4,46 @@ import axios from 'axios';
 import swal from 'sweetalert';
 
 
-function ViewCategory(){
+function ViewProduct(){
 
     const [loading, setLoading] = useState(true);
-    const [categorylist, setCategoryList] = useState([]);
+    const [viewproduct, setProduct] = useState([]);
 
     useEffect(()=>{
-        axios.get('/api/view-category').then(res => {
-            console.log(res.data.category)
+
+        document.title = "View Product";
+
+        axios.get('/api/view-product').then(res => {
+            console.log(res.data.product);
             if(res.status === 200)
             {
-                setCategoryList(res.data.category)
+                setProduct(res.data.product);
+                setLoading(false);
             }
-            setLoading(false);
         });
     },[]);
 
-    const deleteCategory = (e, id) => {
-        e.preventDefault();
-
-        const thisClicked = e.currentTarget;
-        thisClicked.innerText = "Deleting";
-        axios.delete(`/api/delete-category/${id}`).then(res => {
-            if(res.data.status === 200)
-            {
-                swal("Success",res.data.message,"success");
-                thisClicked.closest("tr").remove();
-            }
-            else if(res.data.status === 404)
-            {
-                swal("Error",res.data.message,"error");
-                thisClicked.innerText = "Delete";
-            }
-        });
-    }
-
-    var viewcategory_HTMLTABLE = "";
+    var display_Productdata = "";
     if(loading)
     {
-        return <h4>Loading Category ...</h4>
+        return <h4>Loading View Product ...</h4>
     }
     else
     {
-        viewcategory_HTMLTABLE=
-        categorylist.map((item)=>{
+        display_Productdata=
+        viewproduct.map((item)=>{
             return (
                 <tr key={item.id}>
                     <td>{item.id}</td>
+                    <td>{item.category.name}</td>
                     <td>{item.name}</td>
-                    <td>{item.slug}</td>
-                    <td>{item.status}</td>
+                    <td>{item.selling_price}</td>
+                    <td><img src={`${axios.defaults.baseURL}${item.image}`} width="50px" alt={item.name}/></td>
                     <td>
-                        <Link to={`edit-category/${item.id}`} className="btn btn-primary btn-sm">Edit</Link>
+                        <Link to={`edit-product/${item.id}`} className="btn btn-success btn-sm">Edit</Link>
                     </td>
                     <td>
-                        <button type="button" onClick={(e)=>deleteCategory(e, item.id)} className="btn btn-danger btn-sm">Delete</button>
+                        <button type="button" className="btn btn-danger btn-sm">Delete</button>
                     </td>
                 </tr>
             )
@@ -67,10 +52,10 @@ function ViewCategory(){
 
     return (
         <div className="container px-4">
-            <div className="card mt-4">
+            <div className="card px-4 mt-3">
                 <div className="card-header">
-                    <h4>Category List
-                        <Link to="/admin/add-category" className="btn btn-primary btn-sm float-end">Add Category</Link>
+                    <h4>View Product
+                        <Link to="/admin/add-product" className="btn btn-success btn-sm float-end">Add Product</Link>
                     </h4>
                 </div>                
                 <div className="card-body">
@@ -78,15 +63,16 @@ function ViewCategory(){
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>Slug</th>
-                                <th>Status</th>
+                                <th>Category Name</th>
+                                <th>Product Name</th>
+                                <th>Selling Price</th>
+                                <th>Image</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {viewcategory_HTMLTABLE}
+                            {display_Productdata}
                         </tbody>
                     </table>
                 </div>
@@ -95,4 +81,4 @@ function ViewCategory(){
     );
 }
 
-export default ViewCategory;
+export default ViewProduct;

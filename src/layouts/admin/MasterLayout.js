@@ -4,13 +4,13 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 import '../../assets/admin/css/styles.css';
 import '../../assets/admin/js/scripts';
 import 'https://use.fontawesome.com/releases/v6.1.0/js/all.js';
-import 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js';
 
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
 
 import routes from '../../routes/routes';
+import 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js';
 
 const MasterLayout = () => {
     return (

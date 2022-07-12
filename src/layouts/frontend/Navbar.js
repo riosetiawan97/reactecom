@@ -59,7 +59,13 @@ function Navbar(){
                             <Link className="nav-link active" aria-current="page" to="/">Home</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="#">Collection</Link>
+                            <Link className="nav-link" aria-current="page" to="/about">About</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" aria-current="page" to="/contact">Contact</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/collections">Collection</Link>
                         </li>
                         {AuthButtons}
                     </ul>

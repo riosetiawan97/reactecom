@@ -201,17 +201,17 @@ function Product() {
                                 </div>
                                 <div className='col-md-4 form-group mb-3'>
                                     <label>Featured (checked-shown)</label>
-                                    <input type="Checkbox" name="featured" onChange={handleInput} value={productInput.featured} className="w-50 h-50" />                                    
+                                    <input type="checkbox" name="featured" onChange={handleInput} value={productInput.featured} className="w-50 h-50" />                                    
                                     <small className="text-danger">{errorlist.featured}</small>
                                 </div>
                                 <div className='col-md-4 form-group mb-3'>
                                     <label>Popular (checked-shown)</label>
-                                    <input type="Checkbox" name="popular" onChange={handleInput} value={productInput.popular} className="w-50 h-50" />                                    
+                                    <input type="checkbox" name="popular" onChange={handleInput} value={productInput.popular} className="w-50 h-50" />                                    
                                     <small className="text-danger">{errorlist.popular}</small>
                                 </div>
                                 <div className='col-md-4 form-group mb-3'>
                                     <label>Status (checked-shown)</label>
-                                    <input type="Checkbox" name="status" onChange={handleInput} value={productInput.status} className="w-50 h-50" />                                    
+                                    <input type="checkbox" name="status" onChange={handleInput} value={productInput.status} className="w-50 h-50" />                                    
                                     <small className="text-danger">{errorlist.status}</small>
                                 </div>
                             </div>

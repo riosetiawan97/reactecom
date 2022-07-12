@@ -14,7 +14,7 @@ function ViewProduct(){
         document.title = "View Product";
 
         axios.get('/api/view-product').then(res => {
-            console.log(res.data.product);
+            //console.log(res.data.product);
             if(res.status === 200)
             {
                 setProduct(res.data.product);
@@ -30,8 +30,16 @@ function ViewProduct(){
     }
     else
     {
-        display_Productdata=
-        viewproduct.map((item)=>{
+        var ProdStatus = '';
+        display_Productdata= viewproduct.map((item)=>{
+            if (item.status == '0') 
+            {
+                ProdStatus = 'Shown';
+            } 
+            else if (item.status == '1') 
+            {
+                ProdStatus = 'Hidden';
+            }
             return (
                 <tr key={item.id}>
                     <td>{item.id}</td>
@@ -43,7 +51,7 @@ function ViewProduct(){
                         <Link to={`edit-product/${item.id}`} className="btn btn-success btn-sm">Edit</Link>
                     </td>
                     <td>
-                        <button type="button" className="btn btn-danger btn-sm">Delete</button>
+                        {ProdStatus}
                     </td>
                 </tr>
             )
@@ -68,7 +76,7 @@ function ViewProduct(){
                                 <th>Selling Price</th>
                                 <th>Image</th>
                                 <th>Edit</th>
-                                <th>Delete</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>

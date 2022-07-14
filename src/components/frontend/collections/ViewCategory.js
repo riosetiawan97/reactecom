@@ -56,9 +56,9 @@ function ViewCategory()
 
     return (
         <div>
-            <div className="py-3 bg-warning">
+            <div className="py-3 bg-primary">
                 <div className="container">
-                    <h6>Category Page</h6>
+                    <h6 className="text-white">Category Page</h6>
                 </div>
             </div>
 

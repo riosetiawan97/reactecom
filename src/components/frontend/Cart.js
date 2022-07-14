@@ -9,6 +9,7 @@ function Cart()
     const history = useHistory();
     const [loading, setLoading] = useState(true);
     const [cart, setCart] = useState([]);
+    var totalCartPrice = 0;
 
     if (!localStorage.getItem('auth_token')) {
         history.push('/');
@@ -106,6 +107,7 @@ function Cart()
             </thead>
             <tbody>
                 {cart.map((item, idx)=>{
+                    totalCartPrice += item.product.selling_price * item.product_qty;
                     return (                                                
                         <tr key={idx}>
                             <td width="10%">
@@ -150,6 +152,21 @@ function Cart()
                         <div className="col-md-12">
                             <div className="table-responsive">
                                 {cart_HTML}
+                            </div>
+                        </div>
+                        <div className="col-md-8">
+
+                        </div>
+                        <div className="col-md-4">
+                            <div className="card card-body mt-3">
+                                <h4>Sub Total :
+                                    <span className="float-end">Rp. {totalCartPrice}</span>
+                                </h4>
+                                <h4>Grand Total :
+                                    <span className="float-end">Rp. {totalCartPrice}</span>
+                                </h4>
+                                <hr/>
+                                <Link to="/checkout" className="btn btn-primary">Checkout</Link>
                             </div>
                         </div>
                     </div>

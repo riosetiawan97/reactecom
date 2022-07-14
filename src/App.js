@@ -38,12 +38,13 @@ function App() {
 
           {/* <Route path="/register" component={Register} />
           <Route path="/login" component={Login} /> */}
-          <Route path="/register">
+          
+          {/* <Route path="/register">
             {localStorage.getItem('auth_token') ? <Redirect to='/'/> : <Register/> }
           </Route>
           <Route path="/login">
             {localStorage.getItem('auth_token') ? <Redirect to='/'/> : <Login/> }
-          </Route>
+          </Route> */}
 
           {/* <Route path="/admin" name="Admin" render={(props) => <MasterLayout {...props} /> } /> */}
         </Switch>

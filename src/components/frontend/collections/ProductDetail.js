@@ -43,12 +43,34 @@ function ProductDetail(props)
     	if(quantity > 1)
     	{
     		setQuantity(prevCount => prevCount - 1);	
-    	}    	
+    	}
     }
     const handleIncrement = () => {
     	setQuantity(prevCount => prevCount + 1);
     }
     // Quantity Increment / Decrement in hooks - End
+
+    const submitAddtocart = (e) => {
+        e.preventDefault();
+
+        const data = {
+            product_id : product.id,
+            product_qty : quantity,
+        }
+
+        axios.post(`/api/add-to-cart`, data).then(res => {
+            if(res.data.status===201){
+                swal("Success",res.data.message,"success");
+            }else if(res.data.status===409){
+                //Already Added to Cart
+                swal("Success",res.data.message,"success");
+            }else if(res.data.status===401){
+                swal("Error",res.data.message,"error");
+            }else if(res.data.status===404){
+                swal("Warning",res.data.message,"warning");
+            }
+        });
+    }
 
     if(loading)
     {
@@ -71,7 +93,7 @@ function ProductDetail(props)
 						</div>
 					</div>
 					<div className="col-md-3 mt-3">
-						<button type="button" className="btn btn-primary w-100">Add to Cart</button>
+						<button type="button" className="btn btn-primary w-100" onClick={submitAddtocart}>Add to Cart</button>
 					</div>
 				</div>
     		</div>

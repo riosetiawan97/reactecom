@@ -88,49 +88,72 @@ function Cart()
 
     if(loading)
     {
-        return <h4>Loading Products Details...</h4>
+        return <h4>Loading Cart ...</h4>
     }
 
     var cart_HTML = '';
     if (cart.length > 0) {
         cart_HTML = 
-        <table className="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>Product</th>
-                    <th className="text-center">Price</th>
-                    <th className="text-center">Quantity</th>
-                    <th className="text-center">Total Price</th>
-                    <th>Remove</th>
-                </tr>
-            </thead>
-            <tbody>
-                {cart.map((item, idx)=>{
-                    totalCartPrice += item.product.selling_price * item.product_qty;
-                    return (                                                
-                        <tr key={idx}>
-                            <td width="10%">
-                                <img src={`${axios.defaults.baseURL}${item.product.image}`} alt="{item.product.name}" width="50px" height="50px"/>
-                            </td>
-                            <td>{item.product.name}</td>
-                            <td width="15%" className="text-center">Rp. {item.product.selling_price}</td>
-                            <td width="15%" className="text-center">
-                                <div className="input-group">
-                                    <button type="button" onClick={() => handleDecrement(item.id)} className="input-group-text">-</button>
-                                    <div className="form-control text-center">{item.product_qty}</div>
-                                    <button type="button" onClick={() => handleIncrement(item.id)} className="input-group-text">+</button>
-                                </div>
-                            </td>
-                            <td width="15%" className="text-center">Rp. {item.product.selling_price * item.product_qty}</td>
-                            <td width="10%">
-                                <button type="button" onClick={(e) => deleteCartItem(e, item.id)} className="btn btn-danger btn-sm">Remove</button>
-                            </td>
+        <div>
+            <div className="table-responsive">
+                <table className="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Product</th>
+                            <th className="text-center">Price</th>
+                            <th className="text-center">Quantity</th>
+                            <th className="text-center">Total Price</th>
+                            <th>Remove</th>
                         </tr>
-                    )
-                })}
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        {cart.map((item, idx)=>{
+                            totalCartPrice += item.product.selling_price * item.product_qty;
+                            return (                                                
+                                <tr key={idx}>
+                                    <td width="10%">
+                                        <img src={`${axios.defaults.baseURL}${item.product.image}`} alt="{item.product.name}" width="50px" height="50px"/>
+                                    </td>
+                                    <td>{item.product.name}</td>
+                                    <td width="15%" className="text-center">Rp. {item.product.selling_price}</td>
+                                    <td width="15%" className="text-center">
+                                        <div className="input-group">
+                                            <button type="button" onClick={() => handleDecrement(item.id)} className="input-group-text">-</button>
+                                            <div className="form-control text-center">{item.product_qty}</div>
+                                            <button type="button" onClick={() => handleIncrement(item.id)} className="input-group-text">+</button>
+                                        </div>
+                                    </td>
+                                    <td width="15%" className="text-center">Rp. {item.product.selling_price * item.product_qty}</td>
+                                    <td width="10%">
+                                        <button type="button" onClick={(e) => deleteCartItem(e, item.id)} className="btn btn-danger btn-sm">Remove</button>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </div>
+
+            <div className="row">
+                <div className="col-md-8">
+
+                </div>
+                <div className="col-md-4">
+                    <div className="card card-body mt-3">
+                        <h4>Sub Total :
+                            <span className="float-end">Rp. {totalCartPrice}</span>
+                        </h4>
+                        <h4>Grand Total :
+                            <span className="float-end">Rp. {totalCartPrice}</span>
+                        </h4>
+                        <hr/>
+                        <Link to="/checkout" className="btn btn-primary">Checkout</Link>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     }else{
         cart_HTML = 
         <div className="card card-body py-5 text-center shadow-sm">
@@ -150,25 +173,9 @@ function Cart()
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                            <div className="table-responsive">
-                                {cart_HTML}
-                            </div>
+                            {cart_HTML}
                         </div>
-                        <div className="col-md-8">
-
-                        </div>
-                        <div className="col-md-4">
-                            <div className="card card-body mt-3">
-                                <h4>Sub Total :
-                                    <span className="float-end">Rp. {totalCartPrice}</span>
-                                </h4>
-                                <h4>Grand Total :
-                                    <span className="float-end">Rp. {totalCartPrice}</span>
-                                </h4>
-                                <hr/>
-                                <Link to="/checkout" className="btn btn-primary">Checkout</Link>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 
 import '../../assets/admin/css/styles.css';
 import '../../assets/admin/js/scripts';
+import 'https://www.paypal.com/sdk/js?client-id=Af1fkHX61gQpSgicPXMw1Ypy6acTvR5iC1VCtIA8PaxIowiQb1XshtFaV5EsIlq6gzpoIsIoWckH8Zks';
 
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';

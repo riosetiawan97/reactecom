@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import axios from 'axios';
 import swal from 'sweetalert';
 import {Link, useHistory} from 'react-router-dom';
@@ -56,6 +57,54 @@ function Checkout()
         e.persist();
         setcheckoutInput({...checkoutInput, [e.target.name]: e.target.value});
     }
+
+	const orderinfo_data = {
+		firstname: checkoutInput.firstname,
+		lastname: checkoutInput.lastname,
+		phone: checkoutInput.phone,
+		email: checkoutInput.email,
+		address: checkoutInput.address,
+		city: checkoutInput.city,
+		state: checkoutInput.state,
+		zipcode: checkoutInput.zipcode,
+		payment_mode: 'Paid By PayPal',
+		payment_id: '',
+	}
+
+	//Paypal Code
+	const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
+	const createOrder = (data, actions) => {
+		return actions.order.create({
+			purchase_units: [
+			{
+				amount: {
+//				value: totalCartPrice,
+				value: "0.1",
+				},
+			},
+			],
+		});
+	};
+
+	const onApprove = (data, actions) => {
+		//return actions.order.capture();
+		return actions.order.capture().then(function(details){
+			console.log(details);
+			orderinfo_data.payment_id = details.id;
+			
+			axios.post(`/api/place-order`, orderinfo_data).then(res => {
+				if(res.data.status===200){
+					swal("Order Placed Successfully",res.data.message,"success");
+					setError([]);
+					history.push('/thank-you');
+				}else if(res.data.status===422){
+					swal("All Fields are mandatory","","error");
+					setError(res.data.errors);
+				}
+			});
+		});
+	};
+	//End Paypal Code
 
     const submitOrder = (e, payment_mode) => {
         e.preventDefault();
@@ -120,6 +169,19 @@ function Checkout()
 						};
 						var rzp1 = new window.Razorpay(options);
 						rzp1.open();
+		            }else if(res.data.status===422){
+		                swal("All Fields are mandatory","","error");
+		                setError(res.data.errors);
+		            }
+		        });
+        	break;
+
+			case 'payonline':
+        		axios.post(`/api/validate-order`, data).then(res => {
+		            if(res.data.status===200){
+		                setError([]);
+						var myModal = new window.bootstrap.Modal(document.getElementById('payOnlineModal'));
+						myModal.show();
 		            }else if(res.data.status===422){
 		                swal("All Fields are mandatory","","error");
 		                setError(res.data.errors);
@@ -210,7 +272,8 @@ function Checkout()
                 				<div className="col-md-12">
                     				<div className="form-group text-end">
                     					<button type="button" className="btn btn-primary mx-1" onClick={(e) => submitOrder(e, 'cod')}>Place Order</button>
-                    					<button type="button" className="btn btn-primary mx-1" onClick={(e) => submitOrder(e, 'razorpay')}>Pay Online</button>
+                    					<button type="button" className="btn btn-primary mx-1" onClick={(e) => submitOrder(e, 'razorpay')}>Pay by Razorpay</button>
+                    					<button type="button" className="btn btn-warning mx-1" onClick={(e) => submitOrder(e, 'payonline')}>Pay Online</button>
                 					</div>
                 				</div>
                 			</div>
@@ -259,6 +322,25 @@ function Checkout()
 
 	return (
         <div>
+
+			<div className="modal fade" id="payOnlineModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div className="modal-dialog">
+					<div className="modal-content">
+					<div className="modal-header">
+						<h5 className="modal-title" id="exampleModalLabel">Online Payment Mode</h5>
+						<button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div className="modal-body">
+						<hr/>
+						<PayPalButton
+							createOrder={(data, actions) => this.createOrder(data, actions)}
+							onApprove={(data, actions) => this.onApprove(data, actions)}
+						/>
+					</div>
+					</div>
+				</div>
+			</div>
+			
             <div className="py-3 bg-warning">
                 <div className="container">
                     <h6>Home / Checkout</h6>
